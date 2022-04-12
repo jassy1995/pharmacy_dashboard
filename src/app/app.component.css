@@ -1,0 +1,10 @@
+.svg_container {
+  max-height: 150px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.svg_container svg {
+  height: 120px !important;
+}

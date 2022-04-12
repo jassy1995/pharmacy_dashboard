@@ -1,0 +1,263 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  background-color: rgba(0, 0, 0, .4);
+  z-index: 9999;
+  opacity: 1;
+}
+
+.dialog-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  background-color: transparent;
+  z-index: 99999;
+  overflow: hidden;
+}
+
+.outside-click-close {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  background-color: transparent;
+  z-index: 1;
+}
+
+.dialog {
+  max-width: 600px;
+  box-shadow: 0 10px 20px -8px rgba(0, 0, 0, .2);
+  background-color: #fff;
+  border-radius: 0;
+  overflow: hidden;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 2;
+
+  &.confirmation {
+    @media (min-width: 768px) {
+      height: initial;
+      top: initial;
+      left: initial;
+      right: 0;
+      bottom: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: initial;
+    right: initial;
+    margin: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100% !important;
+    min-width: initial;
+    height: initial;
+    max-height: 100vh;
+    border-radius: 6px 6px 0 0;
+    &.fullscreen {
+      min-height: 100%;
+      border-radius: 0;
+    }
+  }
+
+  &.xs {
+    @media (min-width: 768px) {
+      max-width: 400px;
+    }
+  }
+
+  &.md {
+    @media (min-width: 768px) {
+      max-width: 700px;
+    }
+  }
+
+  &.lg {
+    @media (min-width: 768px) {
+      max-width: 900px;
+    }
+  }
+
+  &.centered {
+    // @media (min-width: 768px) {
+    //     position: fixed;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    //     margin: 0;
+    //     width: 100%;
+    //     max-width: 500px;
+    // }
+  }
+
+  .close {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 39px;
+    right: 33px;
+    z-index: 2;
+    opacity: 1;
+    @media (max-width: 768px) {
+      top: 27px;
+      right: 22px;
+    }
+  }
+
+  .close button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border: 0;
+    border-radius: 50%;
+    background: #ffd2d2;
+    cursor: pointer;
+    color: #dc4e4e;
+    font-size: .95rem;
+
+    &:hover {
+      background: #fabbbb;
+    }
+  }
+
+  .header {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    text-align: left;
+    position: relative;
+    padding: 1rem 3rem;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    @media (max-width: 768px) {
+      padding: 1rem 2rem;
+    }
+
+    header {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .image {
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        border-radius: 100%;
+        margin-right: 15px;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .title {
+        padding: 0;
+        margin-bottom: 2px;
+        font-size: 16px;
+      }
+
+      .subtitle {
+        color: #777;
+        font-size: 13px;
+      }
+
+      .header-close {
+        border: 0;
+        background: 0;
+        font-size: 1.5rem;
+        color: #777;
+      }
+    }
+  }
+
+  .body {
+    padding: 3rem;
+    //position: relative;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+
+    &.with-header {
+      height: calc(100% - 70px);
+    }
+
+    @media (max-width: 768px) {
+      padding: 1.5rem;
+      max-height: calc((var(--vh, 1vh) * 100) - 70px);
+    }
+  }
+
+  &.fullscreen > .body {
+    @media (max-width: 768px) {
+      height: calc((var(--vh, 1vh) * 100) - 70px);
+    }
+  }
+
+  .footer {
+    width: 100%;
+    min-height: 50px;
+    line-height: 50px;
+    background-color: #1d1d20;
+    color: #777;
+    display: flex;
+    flex-flow: row;
+    padding: 20px;
+    justify-content: flex-end;
+
+    .text {
+      flex: 1;
+    }
+
+    .buttons {
+      justify-self: flex-end;
+
+      button + button {
+        margin-left: 5px;
+      }
+
+      button {
+        border: 0;
+        padding: 8px 20px;
+        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .1);
+        border-radius: 3px;
+        color: #eee;
+        cursor: pointer;
+      }
+
+      button.success {
+        background-color: #378d20;
+      }
+
+      button.default {
+        background-color: #383741;
+      }
+
+      button.danger {
+        background-color: #a31e1e;
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<div class="backdrop" [@backdrop]="state"></div>
+
+<div
+  *ngIf="!mobile" class="dialog-wrap d-none d-md-block"
+  [@dialogDesktop]="state" (@dialogDesktop.done)="done($event)"
+  [ngClass]="nested ? 'nested': ''"
+>
+  <div class="outside-click-close" [@backdrop]="state" (click)="dismiss()" *ngIf="closable"></div>
+  <div
+    class="dialog"
+    [ngClass]="size + ' ' + (fullscreen ? 'fullscreen' : '') + ' ' + (centered ? 'centered' : '') + ' ' + (confirmation ? 'confirmation': '')"
+  >
+    <div class="header">
+      <header>
+        <h2 *ngIf="title" class="title">{{ title }}</h2>
+        <button *ngIf="closable" (click)="dismiss()" class="header-close ms-auto"><i class="fa fa-times"></i></button>
+      </header>
+    </div>
+    <div class="body with-header" [ngClass]="{ 'p-0': noPadding }">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+    <div class="footer" *ngIf="successText || cancelText">
+      <div class="buttons">
+        <button class="default" (click)="dismiss()" *ngIf="cancelText">{{ cancelText }}</button>
+        <button class="success" (click)="successAction.emit()" *ngIf="successText">{{ successText }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="mobile" class="dialog-wrap d-md-none" [ngClass]="nested ? 'nested': ''"
+  [@dialogMobile]="state" (@dialogMobile.done)="done($event)"
+>
+  <div class="outside-click-close" [@backdrop]="state" (click)="dismiss()" *ngIf="closable"></div>
+  <div
+    class="dialog"
+    [ngClass]="size + ' ' + (fullscreen ? 'fullscreen' : '') + ' ' + (centered ? 'centered' : '') + ' ' + (confirmation ? 'confirmation': '')"
+  >
+    <div class="header">
+      <header>
+        <h2 *ngIf="title" class="title">{{ title }}</h2>
+        <button *ngIf="closable" (click)="dismiss()" class="header-close ms-auto"><i class="fa fa-times"></i></button>
+      </header>
+    </div>
+    <div class="body with-header" [ngClass]="{ 'p-0': noPadding }">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+    <div class="footer" *ngIf="successText || cancelText">
+      <div class="buttons">
+        <button class="default" (click)="dismiss()" *ngIf="cancelText">{{ cancelText }}</button>
+        <button class="success" (click)="successAction.emit()" *ngIf="successText">{{ successText }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

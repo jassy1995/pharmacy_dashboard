@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+
+# For security reasons, Option followsymlinks cannot be overridden.
+#    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
+    RewriteEngine on
+    RewriteCond %{SERVER_PORT} 80
+    RewriteRule ^(.*)$ https://school.creditclan.com/$1 [R,L]
+
+</IfModule>

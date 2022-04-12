@@ -1,0 +1,202 @@
+<app-header></app-header>
+
+<app-default-layout>
+  <div class="row" id="thisParent">
+    <div class="col-md-9">
+      <nav class="card w-100 py-3 px-4 d-none d-md-flex justify-content-between align-items-center flex-row mb-4">
+        <h5 class="title m-0">
+          Requests
+        </h5>
+        <div class="form-group m-0">
+          <input
+            type="search" name="search" id="search" class="form-control form-control-lg override rounded-full me-2"
+            placeholder="Search.." (input)="handleSearchInputChange($event)"
+          />
+        </div>
+         <div class="d-flex d-md-none align-items-center mb-4">
+        <div class="form-group m-0 w-100">
+          <input
+            type="search" name="search" class="form-control form-control-lg override rounded-full me-2"
+            placeholder="Search.." (input)="handleSearchInputChange($event)"
+          />
+        </div>
+      </div>
+      </nav>
+
+      <div *ngIf="!loading && !items.length">
+        <div *ngIf="!searched.meta">
+          <div class="card mb-4 overflow-hidden bg-light-blue desktop-lg text-center">
+            <div class="h6 d-flex align-items-center justify-content-center mb-0 text-muted">
+              <i class="fa fa-exclamation-circle me-2"></i>
+              No approved request
+            </div>
+          </div>
+        </div>
+        <div *ngIf="searched.meta" class="d-flex flex-column align-items-center text-center">
+          <br><br><br><br><br>
+          <div
+            class="d-flex align-items-center justify-content-center p-3"
+            style="width: 100px; height: 100px; background: rgba(0, 0, 0, .03); border-radius: 50%;"
+          >
+            <img src="assets/images/svg/search-error.svg" alt="Search error" style="width: 50px;">
+          </div>
+          <h5 class="text-muted mt-4">No result</h5>
+          <br><br><br><br><br>
+        </div>
+         <div *ngIf="searched.searching" class="d-flex flex-column align-items-center text-center">
+          <br><br><br><br><br>
+          <div
+            class="d-flex align-items-center justify-content-center p-3"
+            style="width: 100px; height: 100px; background: rgba(0, 0, 0, .03); border-radius: 50%;"
+          >
+            <img src="assets/images/svg/search-error.svg" alt="Search error" style="width: 50px;">
+          </div>
+          <h5 class="text-muted mt-4">No result</h5>
+          <br><br><br><br><br>
+        </div>
+      </div>
+
+      <div *ngIf="!loading">
+        <div *ngFor="let student of items; index as i" class="mb-3 mb-md-4">
+          <!-- Desktop -->
+          <div class="card flex-row align-items-center p-0 d-none d-md-flex">
+            <div class="modal-img-transact-container p-3 border-0 position-relative">
+              <app-square-box class="d-flex border rounded">
+                <img
+                  *ngIf="student.picture" [src]="student.picture"
+                  alt="img-trasact" class="rounded"
+                />
+                <div *ngIf="!student.picture" class="text-center py-5">
+                  <i class="fa fa-user text-muted fa-3x"></i>
+                </div>
+              </app-square-box>
+            </div>
+            <div class="modal-transact-content flex-grow-1 ms-4 ps-2 pe-4 pt-3 pb-3">
+              <div class="d-flex flex-row align-items-center">
+                <div class="flex-grow-1">
+                  <h5 class="product-title mb-1 d-flex align-items-center justify-content-between"
+                      style="font-size: 1.2rem;">
+                    {{student.contribution?student.meal_amount+student.contribution:student.meal_amount | currency:'NGN':'₦':'0.0' }}
+                    <div class="badge bg-success">Approved</div>
+                  </h5>
+                  <h5 class="product-title fw-normal mb-1 d-flex align-items-center">
+                    <i class="fa fa-user me-2"></i>
+                    {{ student.customer.full_name }}
+                    <!-- {{ student.full_name }} -->
+                  </h5>
+                  <h5 class="product-title fw-normal mb-1 d-flex align-items-center">
+                    <i class="fa fa-envelope me-2"></i>
+                    {{ student.customer.email }}
+                    <!-- {{ student.email }} -->
+                  </h5>
+                  <h5 class="product-title fw-normal mb-1">
+                    {{ student.course_title && student.course_title }}
+                  </h5>
+                  <small class="product-title fw-normal mb-1 text-muted fs-6">
+                    {{ student?.date_added | date:'mediumDate' }}
+                  </small>
+                  <div class="mt-1">
+                    <small *ngIf="student?.upfront_paid" class="me-2">
+                      <i class="fa fa-check-circle text-success me-2"></i> Upfront paid
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Mobile -->
+          <div
+            class="card d-flex flex-row align-items-center p-0 d-md-none" style="background: #f8f8f8;"
+          >
+            <div class="modal-transact-content flex-grow-1 ms-md-4 ps-2 pe-2 pt-3 pb-2">
+              <div class="d-flex flex-row align-items-center">
+                <div class="position-relative">
+                  <app-square-box class="d-flex border rounded me-2" style="width: 60px">
+                    <img *ngIf="student.picture" [src]="student.picture" alt="img-trasact" class="rounded"/>
+                    <div *ngIf="!student.picture" class="text-center py-2 d-flex align-items-center">
+                      <i class="fa fa-user text-muted fa-2x"></i>
+                    </div>
+                  </app-square-box>
+                  <span *ngIf="student?.upfront_paid" class="badge-count bg-success" style="top: 5px;right:10px;">
+                    <i class="fa fa-check-circle text-white"></i>
+                  </span>
+                </div>
+                <div class="flex-grow-1 w-100 overflow-hidden">
+                  <h5 class="product-title mb-0 d-flex align-items-center">
+                    {{student.contribution?student.meal_amount+student.contribution:student.meal_amount | currency:'NGN':'₦':'0.0' }}
+                  </h5>
+                  <div class="product-title text-truncate fw-normal mb-0 d-flex align-items-center mt-1">
+                    <i class="fa fa-user me-2"></i>
+                    {{ student.customer.full_name }}
+                  </div>
+                  <div class="product-title text-truncate fw-normal mb-0 d-flex align-items-center mt-1">
+                    <i class="fa fa-envelope me-2"></i>
+                    {{ student.customer.email }}
+                  </div>
+                  <div class="product-title fw-normal mb-0 d-flex align-items-center mt-1">
+                    {{ student?.course_title }}
+                  </div>
+                  <div class="product-title fw-normal mb-1 text-muted fs-6 mt-1">
+                    {{ student?.date_added | date:'mediumDate' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="loading || fetching">
+        <div *ngFor="let item of [1,2]; index as i" class="mb-3 mb-md-4">
+          <div class="card d-flex flex-row align-items-center p-0">
+            <div class="modal-img-transact-container skeleton fit-content" style="position: relative;">
+              <img src="/assets/images/plus.svg" alt="img-trasact"/>
+            </div>
+            <div class="modal-transact-content flex-grow-1 ms-md-4 ps-1 pe-2 pe-md-4 pt-2 pb-2">
+              <div class="d-flex flex-row align-items-center">
+                <div class="skeleton fit-content me-3 ms-2 d-md-none">
+                  <img src="/assets/images/plus.svg" alt="img-trasact" class="d-md-none rounded img-mobile"/>
+                </div>
+                <div class="flex-grow-1">
+                  <h5 class="product-title mb-1 d-flex align-items-center skeleton">Lorem, ipsum.</h5>
+                  <h5 class="product-title fw-normal mb-1 skeleton">Lorem, ipsum dolor.</h5>
+                  <div class="mt-2 skeleton">Lorem.</div>
+                </div>
+              </div>
+              <div class="d-none d-md-flex mt-4">
+                <div class="parentImg skeleton fit-content">
+                  <img src="/assets/images/plus.svg" alt="plus icon"
+                       style="width: 70px; height: 70px; border-radius: 4px; object-fit: cover;"/>
+                </div>
+                <div class="parentImg skeleton fit-content ms-2">
+                  <img
+                    src="/assets/images/plus.svg" alt="plus icon"
+                    style="width: 70px; height: 70px; border-radius: 4px; object-fit: cover;"
+                  />
+                </div>
+              </div>
+              <div class="mt-md-4 d-none d-md-block">
+                <button type="button" class="btn btn-outline-secondary btn-sm skeleton fit-content">
+                  View details
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 text-center" *ngIf="items.length && !pagination.end">
+        <button (click)="loadMore()" class="btn btn-link">Load more</button>
+      </div>
+    </div>
+
+    <div class="col-md-3 d-none d-md-flex">
+      <div class="sticky-sidebar w-100">
+        <div class="card bg-light-blue mb-4">
+          <div class="fs-3 fw-bold text-primary">{{ total || 0 }}</div>
+          <div class="font-size-sm">Pending requests</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-default-layout>

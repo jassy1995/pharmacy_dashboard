@@ -1,0 +1,30 @@
+main {
+  background: #fcfcfc;
+}
+
+.carousel-hack {
+  transform: translateX(-24px);
+  width: 102%;
+  @media (min-width: 768px) {
+    transform: translateX(-39px);
+    width: 114%;
+  }
+}
+
+.stat-value {
+  line-height: 1;
+}
+
+.big-card {
+  padding: 3rem 2rem;
+
+  h5.title {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  h5.title {
+    font-size: 1.3rem;
+  }
+}

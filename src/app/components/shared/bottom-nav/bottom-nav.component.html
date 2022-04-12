@@ -1,0 +1,21 @@
+<div class="bottom-nav d-flex d-md-none">
+  <a
+    [routerLink]="['/', _auth.restaurant!.phone, 'dashboard']" [routerLinkActive]="['active']"
+    class="bottom-nav-item"
+  >
+    <div class="icon"><i class="fa fa-home"></i></div>
+    <small class="text">Home</small>
+  </a>
+  <a
+    [routerLink]="['/', _auth.restaurant!.phone, 'pending']" [routerLinkActive]="['active']" class="bottom-nav-item"
+  >
+    <div class="icon"><i class="fas fa-hourglass"></i></div>
+    <small class="text">Pending</small>
+  </a>
+  <a
+    [routerLink]="['/', _auth.restaurant!.phone, 'approved']" [routerLinkActive]="['active']" class="bottom-nav-item"
+  >
+    <div class="icon"><i class="fas fa-check-double"></i></div>
+    <small class="text">Approved</small>
+  </a>
+</div>

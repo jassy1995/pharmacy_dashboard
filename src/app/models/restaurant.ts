@@ -1,0 +1,40 @@
+export interface RestaurantProfileDetails {
+  account_name: string;
+  account_number: string;
+  address: string;
+  agent_id: number;
+  applications: {
+    pending: number, approved: number, declined: number;
+  };
+  bank_code: string;
+  basic: number;
+  created_at: string;
+  creche: number;
+  deleted: number;
+  email: string;
+  grade: number;
+  id: number;
+  latitude: any;
+  licensed: number;
+  longitude: any;
+  motto: string;
+  name: string;
+  nursery: number;
+  parents: string;
+  payment_link: string;
+  phone: string;
+  picture: string;
+  primary: number;
+  school_photo: string;
+  secondary: number;
+  settings_progress: number;
+  source: number;
+  special_classes: number;
+  students_range: number;
+  term: number;
+  username: string;
+  whatsapp: string;
+  whatsapp_group: number;
+  year: number;
+  slug: string;
+}

@@ -1,0 +1,50 @@
+<header class="header fixed-top" [ngClass]="{ hidden: scrolled && scrollDirection === 'down' }">
+  <div class="sticky-wrapper">
+    <div class="header-bottom sticky-header d-none d-lg-block">
+      <div class="container d-flex justify-content-between" style="height: 70px">
+        <div class="d-flex align-items-center flex-grow-1 flex-md-grow-0 overflow-hidden">
+          <div
+            (click)="_general.navigateTo('/dashboard')"
+            class="d-none d-md-flex align-items-center"
+          >
+            <div class="overflow-visible">
+              <img src="assets/images/logo.png" alt="" style="height: 25px" class="rounded">
+            </div>
+          </div>
+
+          <div class="d-flex d-md-none align-items-center oveflow-hidden w-100">
+            <div class="overflow-visible">
+              <img src="assets/images/alt-logo.png" alt="" style="width: 50px" class="rounded">
+            </div>
+            <h5 class="m-0 ms-3 business-name text-truncate overflow-hidden">
+              Hi, {{ _auth.restaurant?.phone }}
+            </h5>
+          </div>
+        </div>
+
+        <nav class="main-nav ml-auto d-none d-md-flex ms-2">
+          <ul id="target" class="menu mx-auto" style="touch-action: pan-y;">
+            <li
+              (click)="_general.navigateTo('/'+_auth.restaurant?.slug+'/dashboard')"
+              [class.active]="currentRoute == 'dashboard'"
+            >
+              <a href="javascript:void(0)">Home</a>
+            </li>
+            <li
+              (click)="_general.navigateTo('/'+_auth.restaurant?.slug+'/approved')"
+              [class.active]="currentRoute == 'approved'"
+            >
+              <a href="javascript:void(0)" class="position-relative">Approved</a>
+            </li>
+            <li
+              (click)="_general.navigateTo('/'+_auth.restaurant?.slug+'/pending')"
+              [class.active]="currentRoute == 'pending'"
+            >
+              <a href="javascript:void(0)" class="position-relative">Pending approvals</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
